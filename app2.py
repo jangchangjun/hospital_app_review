@@ -6,7 +6,7 @@ import pandas as pd
 # 크롤링 대상 앱 정보
 reviews_list = []
 result, continuation_token = reviews(
-    'com.bbros.sayup',
+    'com.ksncho.hospitalinfo',
     lang='ko',  # default: 'en'
     country='kr',  # default: 'us'
     sort=Sort.NEWEST,  # default: Sort.MOST_RELEVANT
@@ -19,11 +19,11 @@ for review in result:
 
 review_df = pd.DataFrame(reviews_list, columns=['score', 'content', 'date'])
 review_df.dropna()
-print(review_df)
+
 
 
 # JSON 파일로 저장
-json_file_path = 'reviews.json'
+json_file_path = 'reviews2.json'
 review_df.to_json(json_file_path, orient='records', force_ascii=False, indent=4)
 
 year = 2024
@@ -31,7 +31,7 @@ review_list_2020 = []
 
 while year >= 2020:
     result, continuation_token = reviews(
-        'com.bbros.sayup',
+        'com.ksncho.hospitalinfo',
         lang='ko',  # default: 'en'
         country='kr',  # default: 'us'
         sort=Sort.NEWEST,  # default: Sort.MOST_RELEVANT
@@ -50,20 +50,5 @@ while year >= 2020:
 review_df_2020 = pd.DataFrame(review_list_2020, columns=['score', 'content', 'date'])
 print(len(review_df_2020))
 
-json_file_path = 'reviews_2020.json'
+json_file_path = 'reviews2_2020.json'
 review_df_2020.to_json(json_file_path, orient='records', force_ascii=False, indent=4)
-
-
-#
-# result, continuation_token = reviews(
-#     'com.bbros.sayup',
-#     lang='ko',   # default: 'en'
-#     country='kr',   # default: 'us'
-#     sort=Sort.MOST_RELEVANT,   # default: Sort.MOST_RELEVANT
-#     count=5000,   # default: 100
-#     filter_score_with=5  # default: None (모든 평점을 다 가져옴)
-# )
-# result_df = pd.DataFrame(result)
-# json_file_path2 = 'review.json'
-#
-# result_df.to_json(json_file_path2, orient='records', force_ascii=False, indent=4)
