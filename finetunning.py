@@ -1,5 +1,4 @@
 import os
-os.environ['KMP_DUPLICATE_LIB_OK']='True'
 import pandas as pd
 import numpy as np
 from transformers import ElectraTokenizer, ElectraForSequenceClassification
@@ -9,7 +8,7 @@ import torch
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler
 import time
 import datetime
-train_data_path = "sample_1.txt"
+train_data_path = "sample_2.txt"
 
 dataset = pd.read_csv(train_data_path, sep='\t').dropna(axis=0)
 text = list(dataset['content'].values)
@@ -59,6 +58,11 @@ validation_sampler = RandomSampler(validation_data)
 validation_dataloader = DataLoader(validation_data, sampler=validation_sampler, batch_size=batch_size)
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+print(device)
+
+import sys
+sys.exit()
 model = ElectraForSequenceClassification.from_pretrained('koelectra-small-v3-discriminator', num_labels = 2)
 model.to(device)
 
@@ -93,6 +97,26 @@ for e in range(0, epoch):
     print(f'평균 학습 오차 (loss): {avg_train_loss}')
 
     model.eval()
+
+    train_loss, train_accuracy, train_steps, train_example = 0, 0, 0, 0
+    for batch in train_dataloader:
+        batch_ids, batch_mask, batch_label = tuple(t.to(device) for t in batch)
+
+        with torch.no_grad():
+            outputs = model(batch_ids, token_type_ids=None, attention_mask=batch_mask)
+
+        logits = outputs[0]
+        logits = logits.cpu().numpy()
+        label_ids = batch_label.cpu().numpy()
+
+        pred_flat = np.argmax(logits, axis=1).flatten()
+        label_flat = label_ids.flatten()
+        train_accuracy_temp = np.sum(pred_flat == label_flat) / len(label_flat)
+        train_accuracy += train_accuracy_temp
+        train_steps += 1
+
+    print(f"학습 정확도: {train_accuracy / train_steps}")
+
     eval_loss, eval_accuracy, eval_steps, eval_example = 0,0,0,0
     for batch in validation_dataloader:
         batch_ids, batch_mask, batch_label = tuple(t.to(device) for t in batch)
@@ -113,7 +137,7 @@ for e in range(0, epoch):
     print(f"검증 정확도: {eval_accuracy/eval_steps}")
 
 print("\n\n *** 모델 저장 ***")
-save_path = "koelectra"
+save_path = "koelectra_test2"
 model.cpu()
 for param in model.parameters():
     if not param.is_contiguous():

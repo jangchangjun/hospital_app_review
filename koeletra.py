@@ -1,12 +1,13 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import platform
-from matplotlib import font_manager, rc
 
 df = pd.read_json('./reviews.json')
 df2 = pd.read_json('./reviews2.json')
 df_2020 = pd.read_json('./reviews_2020.json')
 df_2_2020 = pd.read_json('./reviews2_2020.json')
+labeled = pd.read_json('./labeled.json')
+
 
 df['label'] = df['score'].apply(lambda x: 'positive'
                                         if x == 5 else('negative' if x <3 else "neutral"))
@@ -14,12 +15,15 @@ df['label'] = df['score'].apply(lambda x: 'positive'
 df2['label'] = df['score'].apply(lambda x: 'positive'
                                         if x == 5 else('negative' if x <3 else "neutral"))
 
+
 df_2020['label'] = df_2020['score'].apply(lambda x: 'positive'
                                         if x == 5 else('negative' if x <3 else "neutral"))
 
 df_2_2020['label'] = df_2_2020['score'].apply(lambda x: 'positive'
                                         if x == 5 else('negative' if x <3 else "neutral"))
 
+labeled['label'] = labeled['label'].apply(lambda x: 0
+                                        if x == "긍" else 1  )
 
 df['label'] = df['label'].apply(lambda x: 0 if x == "positive" else 1)
 
@@ -29,23 +33,18 @@ df_2020['label'] = df_2020['label'].apply(lambda x: 0 if x == "positive" else 1)
 
 df_2_2020['label'] = df_2_2020['label'].apply(lambda x: 0 if x == "positive" else 1)
 
-print((df['label']==0).sum())
-print((df['label']==1).sum(), '\n')
+positive_sample_2 = labeled[labeled['label']==0].sample(n = 1000, random_state=42)
+negative_sample_2 = labeled[labeled['label']==1].sample(n = 300, random_state=42)
 
-print((df2['label']==0).sum())
-print((df2['label']==1).sum(), '\n')
-
-print((df_2020['label']==0).sum())
-print((df_2020['label']==1).sum(), '\n')
-
-print((df_2_2020['label']==0).sum())
-print((df_2_2020['label']==1).sum())
+sample_2 = pd.concat([positive_sample_2, negative_sample_2])
+sample_2.to_csv('sample_2.csv', index=False)
 
 positive_sample_1 = df[df['label']==0].sample(n = 1500, random_state=42)
 negative_sample_1 = df[df['label']==1].sample(n = 500, random_state=42)
 
 sample_1 = pd.concat([positive_sample_1, negative_sample_1])
 sample_1.to_csv('sample_1.csv', index=False)
+
 
 import pandas as pd
 
@@ -58,6 +57,28 @@ def save_csv_as_txt(csv_file_path, txt_file_path):
     # TXT 파일로 변환하여 저장
     df.to_csv(txt_file_path, index=False, sep='\t')
 
+
+# 사용 예시
+csv_file_path = 'sample_2.csv'  # 읽어올 CSV 파일 경로
+txt_file_path = 'sample_2.txt'  # 저장할 TXT 파일 경로
+
+save_csv_as_txt(csv_file_path, txt_file_path)
+
+def save_csv_as_txt(csv_file_path, txt_file_path):
+    # CSV 파일을 DataFrame으로 불러오기
+    df = pd.read_csv(csv_file_path)
+
+    # TXT 파일로 변환하여 저장
+    df.to_csv(txt_file_path, index=False, sep='\t')
+
+input_json_path = 'reviews.json'
+output_txt_path = 'data.txt'
+
+# JSON 파일 읽기
+data = pd.read_json(input_json_path)
+
+# TXT 파일로 저장 (탭으로 구분)
+data.to_csv(output_txt_path, sep='\t', index=False, encoding='utf-8')
 
 # 사용 예시
 csv_file_path = 'sample_1.csv'  # 읽어올 CSV 파일 경로
@@ -76,15 +97,4 @@ plt.rcParams['axes.unicode_minus'] = False  # 마이너스 기호 깨짐 방지
 
 
 text_lengths = [len(content) for content in df]
-
-# 그래프를 그립니다.
-plt.figure(figsize=(10, 6))  # 그래프 크기 조정
-plt.bar(range(len(text_lengths)), text_lengths, color='skyblue')
-plt.xlabel("데이터 인덱스")  # x축 이름
-plt.ylabel("문자열 길이")    # y축 이름
-plt.title("각 문자열의 길이")  # 그래프 제목
-plt.xticks(range(len(text_lengths)), range(1, len(text_lengths) + 1))  # x축 눈금 설정
-
-# 그래프를 보여줍니다.
-plt.show()
 

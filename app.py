@@ -1,7 +1,6 @@
-from datetime import datetime
-
 from google_play_scraper import Sort, reviews
 import pandas as pd
+import json
 
 # 크롤링 대상 앱 정보
 reviews_list = []
@@ -53,17 +52,13 @@ print(len(review_df_2020))
 json_file_path = 'reviews_2020.json'
 review_df_2020.to_json(json_file_path, orient='records', force_ascii=False, indent=4)
 
+excel_file = 'labeld.xlsx'
+df = pd.read_excel(excel_file)
 
-#
-# result, continuation_token = reviews(
-#     'com.bbros.sayup',
-#     lang='ko',   # default: 'en'
-#     country='kr',   # default: 'us'
-#     sort=Sort.MOST_RELEVANT,   # default: Sort.MOST_RELEVANT
-#     count=5000,   # default: 100
-#     filter_score_with=5  # default: None (모든 평점을 다 가져옴)
-# )
-# result_df = pd.DataFrame(result)
-# json_file_path2 = 'review.json'
-#
-# result_df.to_json(json_file_path2, orient='records', force_ascii=False, indent=4)
+# 텍스트 파일로 저장 (출력 파일명을 설정하세요)
+labeled_json = 'labeled.json'
+df.to_json(labeled_json, orient='records', force_ascii=False, indent=4)
+
+
+
+
