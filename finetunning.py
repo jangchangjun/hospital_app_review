@@ -8,7 +8,7 @@ import torch
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler
 import time
 import datetime
-train_data_path = "sample_2.txt"
+train_data_path = "sample_1.txt"
 
 dataset = pd.read_csv(train_data_path, sep='\t').dropna(axis=0)
 text = list(dataset['content'].values)
@@ -59,10 +59,10 @@ validation_dataloader = DataLoader(validation_data, sampler=validation_sampler, 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-print(device)
-
-import sys
-sys.exit()
+# print(device)
+#
+# import sys
+# sys.exit()
 model = ElectraForSequenceClassification.from_pretrained('koelectra-small-v3-discriminator', num_labels = 2)
 model.to(device)
 
@@ -137,7 +137,7 @@ for e in range(0, epoch):
     print(f"검증 정확도: {eval_accuracy/eval_steps}")
 
 print("\n\n *** 모델 저장 ***")
-save_path = "koelectra_test2"
+save_path = "koelectra"
 model.cpu()
 for param in model.parameters():
     if not param.is_contiguous():

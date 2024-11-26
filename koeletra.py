@@ -7,10 +7,11 @@ df2 = pd.read_json('./reviews2.json')
 df_2020 = pd.read_json('./reviews_2020.json')
 df_2_2020 = pd.read_json('./reviews2_2020.json')
 labeled = pd.read_json('./labeled.json')
+df_2017 = pd.read_json('./reviews_2017.json')
 
 
 df['label'] = df['score'].apply(lambda x: 'positive'
-                                        if x == 5 else('negative' if x <3 else "neutral"))
+                                        if x >= 4 else('negative' if x <3 else "neutral"))
 
 df2['label'] = df['score'].apply(lambda x: 'positive'
                                         if x == 5 else('negative' if x <3 else "neutral"))
@@ -22,16 +23,21 @@ df_2020['label'] = df_2020['score'].apply(lambda x: 'positive'
 df_2_2020['label'] = df_2_2020['score'].apply(lambda x: 'positive'
                                         if x == 5 else('negative' if x <3 else "neutral"))
 
+df_2017['label'] = df_2017['score'].apply(lambda x: 'positive'
+                                        if x == 5 else('negative' if x <3 else "neutral"))
+
 labeled['label'] = labeled['label'].apply(lambda x: 0
                                         if x == "긍" else 1  )
 
-df['label'] = df['label'].apply(lambda x: 0 if x == "positive" else 1)
+df['label'] = df['label'].apply(lambda x: 1 if x == "positive" else 0)
 
 df2['label'] = df2['label'].apply(lambda x: 0 if x == "positive" else 1)
 
 df_2020['label'] = df_2020['label'].apply(lambda x: 0 if x == "positive" else 1)
 
 df_2_2020['label'] = df_2_2020['label'].apply(lambda x: 0 if x == "positive" else 1)
+
+df_2017['label'] = df_2017['label'].apply(lambda x: 0 if x == "positive" else 1)
 
 positive_sample_2 = labeled[labeled['label']==0].sample(n = 1000, random_state=42)
 negative_sample_2 = labeled[labeled['label']==1].sample(n = 300, random_state=42)
