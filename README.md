@@ -44,6 +44,7 @@
 
 12257건의 데이터로 이루어져있으며 score, content, date 열로 구성되어있다. 
 
+<div><p align='center'><img src="images/score.jpg" width = "450", height = "300"></p></div>
 
 
 
