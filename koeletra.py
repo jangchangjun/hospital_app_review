@@ -26,27 +26,27 @@ df_2_2020['label'] = df_2_2020['score'].apply(lambda x: 'positive'
 df_2017['label'] = df_2017['score'].apply(lambda x: 'positive'
                                         if x == 5 else('negative' if x <3 else "neutral"))
 
-labeled['label'] = labeled['label'].apply(lambda x: 0
-                                        if x == "긍" else 1  )
+labeled['label'] = labeled['label'].apply(lambda x: 1
+                                        if x == "긍" else 0  )
 
 df['label'] = df['label'].apply(lambda x: 1 if x == "positive" else 0)
 
-df2['label'] = df2['label'].apply(lambda x: 0 if x == "positive" else 1)
+df2['label'] = df2['label'].apply(lambda x: 1 if x == "positive" else 0)
 
-df_2020['label'] = df_2020['label'].apply(lambda x: 0 if x == "positive" else 1)
+df_2020['label'] = df_2020['label'].apply(lambda x: 1 if x == "positive" else 1)
 
-df_2_2020['label'] = df_2_2020['label'].apply(lambda x: 0 if x == "positive" else 1)
+df_2_2020['label'] = df_2_2020['label'].apply(lambda x: 1 if x == "positive" else 1)
 
-df_2017['label'] = df_2017['label'].apply(lambda x: 0 if x == "positive" else 1)
+df_2017['label'] = df_2017['label'].apply(lambda x: 1 if x == "positive" else 1)
 
-positive_sample_2 = labeled[labeled['label']==0].sample(n = 1000, random_state=42)
-negative_sample_2 = labeled[labeled['label']==1].sample(n = 300, random_state=42)
+positive_sample_2 = labeled[labeled['label']==1].sample(n = 1000, random_state=42)
+negative_sample_2 = labeled[labeled['label']==0].sample(n = 300, random_state=42)
 
 sample_2 = pd.concat([positive_sample_2, negative_sample_2])
 sample_2.to_csv('sample_2.csv', index=False)
 
-positive_sample_1 = df[df['label']==0].sample(n = 1500, random_state=42)
-negative_sample_1 = df[df['label']==1].sample(n = 500, random_state=42)
+positive_sample_1 = df[df['label']==1].sample(n = 1500, random_state=42)
+negative_sample_1 = df[df['label']==0].sample(n = 500, random_state=42)
 
 sample_1 = pd.concat([positive_sample_1, negative_sample_1])
 sample_1.to_csv('sample_1.csv', index=False)

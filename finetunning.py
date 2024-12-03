@@ -8,7 +8,7 @@ import torch
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler
 import time
 import datetime
-train_data_path = "sample_1.txt"
+train_data_path = "sample_2.txt"
 
 dataset = pd.read_csv(train_data_path, sep='\t').dropna(axis=0)
 text = list(dataset['content'].values)
@@ -20,8 +20,8 @@ for j in range(num_to_print):
     print(f'text" {text[j][:20]}, \tlabel : {label[j]}')
 
 print(f'\t * 학습 데이터의 수 : {len(text)}')
-print(f'\t * 부정 리뷰 수 : {list(label).count(1)}')
-print(f'\t * 긍정 리뷰 수 : {list(label).count(0)}')
+print(f'\t * 부정 리뷰 수 : {list(label).count(0)}')
+print(f'\t * 긍정 리뷰 수 : {list(label).count(1)}')
 
 tokenizer = ElectraTokenizer.from_pretrained('koelectra-small-v3-discriminator')
 inputs = tokenizer(text, truncation=True, max_length=256, add_special_tokens=True, padding="max_length")
@@ -137,7 +137,7 @@ for e in range(0, epoch):
     print(f"검증 정확도: {eval_accuracy/eval_steps}")
 
 print("\n\n *** 모델 저장 ***")
-save_path = "koelectra"
+save_path = "koelectra_test"
 model.cpu()
 for param in model.parameters():
     if not param.is_contiguous():

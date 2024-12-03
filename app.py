@@ -49,13 +49,13 @@ review_df.to_json(json_file_path, orient='records', force_ascii=False, indent=4)
 # review_df_2020 = pd.DataFrame(review_list_2020, columns=['score', 'content', 'date'])
 # print(len(review_df_2020))
 
-excel_file = 'labeld.xlsx'
-df = pd.read_excel(excel_file)
-
-# 텍스트 파일로 저장 (출력 파일명을 설정하세요)
-labeled_json = 'labeled.json'
-df.to_json(labeled_json, orient='records', force_ascii=False, indent=4)
-
+# excel_file = 'labeld.xlsx'
+# df = pd.read_excel(excel_file)
+#
+# # 텍스트 파일로 저장 (출력 파일명을 설정하세요)
+# labeled_json = 'labeled.json'
+# df.to_json(labeled_json, orient='records', force_ascii=False, indent=4)
+#
 input_file = "reviews.txt"
 output_file = "labeled_reviews.txt"
 
@@ -68,7 +68,7 @@ df = pd.DataFrame(data)
 
 # 라벨링: score가 4, 5면 긍정(1), 1, 2면 부정(0), 나머지 제외
 df = df[df['score'].isin([1, 2, 4, 5])]  # 중립인 3점 데이터 제외
-df['label'] = df['score'].apply(lambda x: 0 if x >= 4 else 1)
+df['label'] = df['score'].apply(lambda x: 1 if x >= 4 else 0)
 
 # 결과 저장
 df.to_csv(output_file, sep='\t', index=False, encoding='utf-8')
