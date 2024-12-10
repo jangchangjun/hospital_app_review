@@ -205,7 +205,7 @@ Test step : 3/371, Temp Accuracy : 0.875
 Test step : 369/371, Temp Accuracy : 0.9375
 Test step : 370/371, Temp Accuracy : 1.0
 Test step : 371/371, Temp Accuracy : 1.0
-Total Accuracy : 0.9182951482479784
+Total Accuracy : 0.926128706199461
 ```
 
 ## 4. 모델 적용 데이터 활용.
