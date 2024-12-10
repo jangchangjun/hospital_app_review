@@ -102,6 +102,15 @@ print('데이터 개수', len(data)
 |1998|1|처음가는 병원 똑딱으로 접수해도 주민번호 다시 불러야되던데 그럼 굳이 똑딱에는 주민뒷번호 까지 왜 수집함? 니들이 뭔데? 남의정보 수집함??| 2015-02-02 | 0 |
 |1999|1|쓰지마삼 약국 1도 안뜸ㅋㅋ| 2015-02-02 | 0 |
 
+- 학습과 검증 데이터셋 분리
+
+<div><img src="img/학습1.png"></div>
+
+<div><img src="img/sample_1_데이터분리.png"></div>
+
+긍정 데이터 1500개와 부정 데이터 500건을 랜덤으로 추출해 총 2000건으로 이루어져있으며,
+학습 데이터 1600개와 검증 데이터 400개로 분리하였다.
+
 - 직접 라벨링을 거친 학습데이터
 
 | | score | content | date | label |
@@ -112,9 +121,14 @@ print('데이터 개수', len(data)
 |1298|1|병원 예약을 돈내고 앱을 통해 하게 만들고 돈 없거나 앱 쓸줄 모르는 사람들은 의료혜택 차별받게 하는 양아치 앱. 사용하지 않아야 합니다. 앱 기획의도 자체가 쓰레기 같네요. 먼저 간 사람이 먼저 검진하는게 당연합니다. 앱 삭제 하세요| 2023-12-05 | 0 |
 |1299|1|	처음 설치해봤는데 환자명에 다른 사람이름이 있었어요. 제 정보로 수정했는데 계속해서 그 분 정보로 바뀌더라구요. 카카오연동후에 그러는거 같은데 오류인가요? 좀 무섭네요.| 2020-02-04 | 0 |
 
-- 학습데이터.
-랜덤 추출(스코어 활용) 정확도 0.93
-직접 추출 정확도 0.99
+- 학습과 검증 데이터셋 분리
+
+<div><img src="img/학습2.png"></div>
+
+<div><img src="img/sample_2_데이터분리.png"></div>
+
+긍정 데이터 1000건과 부정 데이터 300건을 랜덤으로 추출해 총 1300건으로 이루어져있으며,
+학습 데이터 1040개와 검증 데이터 260개로 분리하였다.
 
 ## 3. 재학습 결과
 ### 3.1 개발환경
@@ -123,7 +137,28 @@ print('데이터 개수', len(data)
 ## 3.2 KOELECTRA fine-tuning
 
 KOELECTRA 모델을 fine-tunning하며 각각 2000건, 1300건의 데이터를 학습 데이터를 사용했으며, 데이터를 학습시킨 뒤 총 12257건의 데이터에 적용시켜 모델을 테스트했다.
-랜덤 추출 학습데이터 2가지 학습률 추이, 각 모델의 정확도 비교분석.
+
+## 3.3 학습 결과 그래프
+
+<div><p align='center'><img src="img/검증정확도_1.png"></p></div>
+
+<div><p align='center'><img src="img/학습오차.png"></p></div>
+
+<table>
+  <tr align="center"><th></th><th></th><th>Epoch 1</th><th>Epoch 2</th><th>Epoch 3</th><th>Epoch 4</th></tr>
+  <tr align="center"><th rowspan="2">학습데이터 1</th><td>평균 학습 오차</td><td>0.58</td><td>0.37</td><td>0.24</td><td>0.15</td></tr>
+  <tr align="center"><td>검증 정확도</td><td>0.74</td><td>0.86</td><td>0.87</td><td>0.89</td></tr>
+</table>
+
+<div><p align='center'><img src="img/검증정확도_2.png"></p></div>
+
+<div><p align='center'><img src="img/학습오차_2.png"></p></div>
+
+<table>
+  <tr align="center"><th></th><th></th><th>Epoch 1</th><th>Epoch 2</th><th>Epoch 3</th><th>Epoch 4</th></tr>
+  <tr align="center"><th rowspan="2">학습데이터 2</th><td>평균 학습 오차</td><td>0.58</td><td>0.37</td><td>0.24</td><td>0.15</td></tr>
+  <tr align="center"><td>검증 정확도</td><td>0.74</td><td>0.86</td><td>0.87</td><td>0.89</td></tr>
+</table>
 
 ## 4. 모델 적용 데이터 활용.
 
