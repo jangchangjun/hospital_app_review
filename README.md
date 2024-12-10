@@ -113,6 +113,18 @@ print('데이터 개수', len(data)
 
 - 직접 라벨링을 거친 학습데이터
 
+직접 라벨링을 진행하며 리뷰 글자 수가 20자 이상, 평점이 4-5점 이지만 부정적인 내용이 담겨있거나 1-2점인데 긍정적인 내용이 담겨있던 열을 삭제하였고, 어플과 관련없는 리뷰, 별점과 내용이 알맞지 않는 경우에 데이터를 삭제하였다.
+
+ex)
+
+| | score | content | date | label |
+|-|----------|---|--|--|
+|0|4|병원 검색을 매번 해야해서 번거롭..즐찾하는 기능이 있는거같은데 어려워영.. 알람이 매우 자주 와서 병원 방문을 절대 까먹진 않을 듯요| 2023-11-07	| 1 |
+|1|5|Good| 2016-07-16 | 1 |
+|2|5|갈수록 복잡해 지는것 같아요 초기버전이 간단해서 좋았네요| 2020-03-04 | 1 |
+
+#### 과정을 거친 학습 데이터
+
 | | score | content | date | label |
 |-|----------|---|--|--|
 |0|5|병원 검색할때 찾기 쉽고 똑딱쓰는 병원은 예약하기 편하고 좋아요. 여러 병원이 이용했음 좋겠어요| 2022-11-07	| 1 |
@@ -150,15 +162,51 @@ KOELECTRA 모델을 fine-tunning하며 각각 2000건, 1300건의 데이터를 �
   <tr align="center"><td>검증 정확도</td><td>0.86</td><td>0.91</td><td>0.90</td><td>0.90</td></tr>
 </table>
 
+학습 데이터의 평균 오차가 학습이 진행됨에 따라 0.40에서 0.15로 감소되었고 이와 반대로 검증 정확도는 학습이 진행됨에 따라 0.86에서 0.90까지 상승하였다.
+
 <div><p align='center'><img src="img/검증정확도_2.png"></p></div>
 
 <div><p align='center'><img src="img/학습오차_2.png"></p></div>
 
 <table>
   <tr align="center"><th></th><th></th><th>Epoch 1</th><th>Epoch 2</th><th>Epoch 3</th><th>Epoch 4</th></tr>
-  <tr align="center"><th rowspan="2">학습데이터 2</th><td>평균 학습 오차</td><td>0.58</td><td>0.37</td><td>0.24</td><td>0.15</td></tr>
-  <tr align="center"><td>검증 정확도</td><td>0.74</td><td>0.86</td><td>0.87</td><td>0.89</td></tr>
+  <tr align="center"><th rowspan="2">학습데이터 2</th><td>평균 학습 오차</td><td>0.30</td><td>0.20</td><td>0.10</td><td>0.03</td></tr>
+  <tr align="center"><td>검증 정확도</td><td>0.92</td><td>0.98</td><td>0.99</td><td>0.99</td></tr>
 </table>
+
+학습 데이터의 평균 오차가 학습이 진행됨에 따라 0.30에서 0.03로 감소되었고 이와 반대로 검증 정확도는 학습이 진행됨에 따라 0.92에서 0.99까지 상승하였다.
+
+두 개의 학습데이터 모두 높은 정확도와 낮은 오차율을 보였지만, score열만을 활용한 학습 데이터보다 직접 라벨링을 진행한 두 번째 학습 데이터의 정확도가 더 높게 나타났다.
+
+## 3.4 모델 적용
+
+각각의 학습 모델을 전체 데이터(12,257건)에 적용한 결과
+
+학습 데이터1
+
+```
+Test step : 1/371, Temp Accuracy : 0.78125
+Test step : 2/371, Temp Accuracy : 0.90625
+Test step : 3/371, Temp Accuracy : 0.84375
+...
+Test step : 369/371, Temp Accuracy : 0.9375
+Test step : 370/371, Temp Accuracy : 1.0
+Test step : 371/371, Temp Accuracy : 1.0
+Total Accuracy : 0.9182951482479784
+```
+
+학습 데이터2
+
+```
+Test step : 1/371, Temp Accuracy : 0.78125
+Test step : 2/371, Temp Accuracy : 0.875
+Test step : 3/371, Temp Accuracy : 0.875
+...
+Test step : 369/371, Temp Accuracy : 0.9375
+Test step : 370/371, Temp Accuracy : 1.0
+Test step : 371/371, Temp Accuracy : 1.0
+Total Accuracy : 0.9182951482479784
+```
 
 ## 4. 모델 적용 데이터 활용.
 
