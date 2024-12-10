@@ -170,6 +170,8 @@ KOELECTRA 모델을 fine-tunning하며 각각 2000건, 1300건의 데이터를 �
 
 위 그래프의 긍부정 결과를 토대로 사용자가 어플의 어떤 점을 좋게 또는 나쁘게 보았는지를 토픽모델링을 통해 알아낸 뒤 이를 토대로 사용자 유입/이탈을 연결하고자 한다.
 
+https://engine.roa.ai/companies/gEQGSsi0/financial_statements 기업 재무재표 참고
+
 - 2017
 (부정 토픽)
 - 2019
