@@ -146,8 +146,8 @@ KOELECTRA 모델을 fine-tunning하며 각각 2000건, 1300건의 데이터를 �
 
 <table>
   <tr align="center"><th></th><th></th><th>Epoch 1</th><th>Epoch 2</th><th>Epoch 3</th><th>Epoch 4</th></tr>
-  <tr align="center"><th rowspan="2">학습데이터 1</th><td>평균 학습 오차</td><td>0.58</td><td>0.37</td><td>0.24</td><td>0.15</td></tr>
-  <tr align="center"><td>검증 정확도</td><td>0.74</td><td>0.86</td><td>0.87</td><td>0.89</td></tr>
+  <tr align="center"><th rowspan="2">학습데이터 1</th><td>평균 학습 오차</td><td>0.40</td><td>0.25</td><td>0.20</td><td>0.15</td></tr>
+  <tr align="center"><td>검증 정확도</td><td>0.86</td><td>0.91</td><td>0.90</td><td>0.90</td></tr>
 </table>
 
 <div><p align='center'><img src="img/검증정확도_2.png"></p></div>
