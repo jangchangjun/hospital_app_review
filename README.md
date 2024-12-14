@@ -265,11 +265,12 @@ Total Accuracy : 0.926128706199461
 https://engine.roa.ai/companies/gEQGSsi0/financial_statements 기업 재무재표 참고
 
 - 2017
-(부정 토픽)
+<div> <img src = "img/2017_부정1.png" width="300", height = "300"> <img src = "img/2017_부정2.png" width="350", height = "300"> <img src = "img/2017_부정3.png" width="350", height = "300"> </div>
 - 2019
-(긍정 토픽)
+<div> <img src = "img/ddodoc.jpg" width="400"> <img src = "img/ddodoc2.jpg" width="250", height = "400"> </div>
 - 2024
-(부정 토픽)
+<div> <img src = "img/ddodoc.jpg" width="400"> <img src = "img/ddodoc2.jpg" width="250", height = "400"> </div>
+
 ### 4.4 기대 효과
 
 ## 5. 결론 및 느낀점
